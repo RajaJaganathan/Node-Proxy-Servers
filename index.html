@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Browser Sync Proxy</title>
+    <script src="./node_modules/jquery/dist/jquery.min.js"></script>
+    <script>
+        $.get('/api/posts/1/edit', function(response) {
+            $('#response5').html(JSON.stringify(response, null, 2));
+        });
+        $.get('/api/comments/1/edit', function(response) {
+            $('#response6').html(JSON.stringify(response, null, 2));
+        });
+
+        $.get('/api/posts/1', function(response) {
+            $('#response').html(JSON.stringify(response, null, 2));
+        });
+        $.get('/api/comments/1', function(response) {
+            $('#response1').html(JSON.stringify(response, null, 2));
+        });
+
+        $.get('/api/posts', function(response) {
+            $('#response3').html(JSON.stringify(response, null, 2));
+        });
+        $.get('/api/comments', function(response) {
+            $('#response4').html(JSON.stringify(response, null, 2));
+        });
+    </script>
+</head>
+
+<body>
+    <h1>Browser Sync Proxy</h1>
+    <h2>Posts(posts/1/edit)</h2>
+    <pre id="response5">
+    </pre>
+    <h2>Comments(comments/1/edit)</h2>
+    <pre id="response6">
+    </pre>
+    <h2>Posts(posts/1)</h2>
+    <pre id="response">
+    </pre>
+    <h2>Comments(comments/1)</h2>
+    <pre id="response1">
+    </pre>
+    <h2>Posts</h2>
+    <pre id="response3">
+    </pre>
+    <h2>Comments</h2>
+    <pre id="response4">
+    </pre>
+</body>
+
+</html>
