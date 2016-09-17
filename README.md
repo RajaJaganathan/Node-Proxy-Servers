@@ -1,7 +1,10 @@
 # Node-Proxy-Server
-Simple node proxy server by using express and http-proxy node moudles
+
+Simple node proxy server is created by using express, browser-sync, http-proxy-middleware and gulp.
 
 ###BrowserSync Proxy Server:
+
+'Server' gulp taks is very useful when your application running in local dev environment where as all your service(consuming) api on another server.  Usallly we got error like 'XMLHttpRequest cannot load http://domain.com/api/post. No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'null' is therefore not allowed access'. In order resolve the above issue you  could use below gulp task.
 
 ```
 
@@ -32,6 +35,8 @@ gulp.task('server', function() {
 ```
 
 ### BrowserSync Local Server
+
+At the same time we don't really need to hit really server on development environment. In this scenario we can use below gulp task which serve the mock data json instead of calling original service.
 
 ```
 var localProxyMiddleware = proxy('/api', {
