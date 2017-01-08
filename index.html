@@ -4,26 +4,39 @@
 <head>
     <meta charset="UTF-8">
     <title>Browser Sync Proxy</title>
-    <script src="./node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="./jquery.min.js"></script>
     <script>
-        $.get('/api/posts/1/edit', function(response) {
-            $('#response5').html(JSON.stringify(response, null, 2));
-        });
-        $.get('/api/comments/1/edit', function(response) {
-            $('#response6').html(JSON.stringify(response, null, 2));
-        });
+        // $.get('/api/posts/1/edit', function(response) {
+        //     $('#response5').html(JSON.stringify(response, null, 2));
+        // });
+        //  $.get('/api/posts/2/edit', function(response) {
+        //     $('#response7').html(JSON.stringify(response, null, 2));
+        // });
+        // $.get('/api/comments/1/edit', function(response) {
+        //     $('#response6').html(JSON.stringify(response, null, 2));
+        // });
 
-        $.get('/api/posts/1', function(response) {
-            $('#response').html(JSON.stringify(response, null, 2));
-        });
-        $.get('/api/comments/1', function(response) {
-            $('#response1').html(JSON.stringify(response, null, 2));
-        });
+        // $.get('/api/posts/1', function(response) {
+        //     $('#response').html(JSON.stringify(response, null, 2));
+        // });
+        // $.get('/api/comments/1', function(response) {
+        //     $('#response1').html(JSON.stringify(response, null, 2));
+        // });
 
-        $.get('/api/posts', function(response) {
-            $('#response3').html(JSON.stringify(response, null, 2));
+        // $.get('/api/posts', function(response) {
+        //     $('#response3').html(JSON.stringify(response, null, 2));
+        // });
+        // $.get('/api/comments', function(response) {
+        //     $('#response4').html(JSON.stringify(response, null, 2));
+        // });
+
+        $.post('/api/comments/2', {data:'lorem ipsum'}, function(response) {
+            $('#response8').html(JSON.stringify(response, null, 2));
         });
-        $.get('/api/comments', function(response) {
+        $.get('api/v1/js/talent/privacyPolicy', function(response) {
+            $('#response8').html(JSON.stringify(response, null, 2));
+        });
+        $.get('/api/v1/js/talent/6271413/roles', function(response) {
             $('#response4').html(JSON.stringify(response, null, 2));
         });
     </script>
@@ -33,6 +46,9 @@
     <h1>Browser Sync Proxy</h1>
     <h2>Posts(posts/1/edit)</h2>
     <pre id="response5">
+    </pre>
+    <h2>Posts(posts/2/edit)</h2>
+    <pre id="response7">
     </pre>
     <h2>Comments(comments/1/edit)</h2>
     <pre id="response6">
@@ -48,6 +64,11 @@
     </pre>
     <h2>Comments</h2>
     <pre id="response4">
+    </pre>
+    <h2>Save Comments</h2>    
+    <button type="button" class="btn btn-default save-comments">Submit</button>
+    <pre id="response8">
+
     </pre>
 </body>
 
