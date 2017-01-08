@@ -1,6 +1,75 @@
 # Node-Proxy-Server
-Simple node proxy server by using express and http-proxy node moudles
 
+Simple node proxy server is created by using express, browser-sync, http-proxy-middleware and gulp.
+
+###BrowserSync Proxy Server:
+
+'Server' gulp taks is very useful when your application running in local dev environment where as all your service(consuming) api on another server.  Usallly we got error like 'XMLHttpRequest cannot load http://domain.com/api/post. No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'null' is therefore not allowed access'. In order resolve the above issue you  could use below gulp task.
+
+```
+
+var apiProxyMiddleware = proxy('/api', {
+    target: 'https://jsonplaceholder.typicode.com',
+    changeOrigin: true,
+    logLevel: 'debug',
+    pathRewrite: {
+        '/api': '' //optional but current server no clue about URL pattern 
+    },
+    router: { // Some request to other server
+        // '/posts': 'http://www.sub.example.com/'
+    }
+});
+
+
+gulp.task('server', function() {
+    browserSync.init({
+        server: {
+            baseDir: ".",
+            middleware: [
+                apiProxyMiddleware
+            ]
+        }
+    });
+});
+
+```
+
+### BrowserSync Local Server
+
+At the same time we don't really need to hit really server on development environment. In this scenario we can use below gulp task which serve the mock data json instead of calling original service.
+
+```
+var localProxyMiddleware = proxy('/api', {
+    target: 'http://localhost:3000',
+    changeOrigin: true,
+    logLevel: 'debug',
+    pathRewrite: { //NOTE: ORDER IS IMPORTANT HERE
+        '/api/posts/[0-9]/edit': '/mockdata/posts_edit_1.json',
+        '/api/comments/[0-9]/edit': '/mockdata/comments_edit_1.json',
+        '/api/posts/[0-9]': '/mockdata/posts_1.json',
+        '/api/comments/[0-9]': '/mockdata/comments_1.json',
+        '/api/posts': '/mockdata/posts.json',
+        '/api/comments': '/mockdata/comments.json'
+    }
+    // pathRewrite: { //NOTE: ORDER IS NOT IMPORTANT HERE       
+    //     '^/api/posts/?(.*)': '/mockdata/posts.json',
+    //     '^/api/comments/?(.*)': '/mockdata/comments.json'
+    // }
+});
+
+gulp.task('default', function() {
+    browserSync.init({
+        server: {
+            baseDir: ".",
+            middleware: [
+                localProxyMiddleware
+            ]
+        }
+    });
+});
+
+```
+###Express Proxy Server:
 
 ```
 
