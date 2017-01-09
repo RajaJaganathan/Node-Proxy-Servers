@@ -16,6 +16,8 @@
     "minimatch": "^3.0.3"
   },
   "dependencies": {
+    "express": "^4.14.0",
+    "httpp-proxy": "^0.10.3",
     "jquery": "^3.1.0"
   }
 }

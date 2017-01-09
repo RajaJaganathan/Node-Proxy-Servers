@@ -33,10 +33,10 @@
         $.post('/api/comments/2', {data:'lorem ipsum'}, function(response) {
             $('#response8').html(JSON.stringify(response, null, 2));
         });
-        $.get('api/v1/js/talent/privacyPolicy', function(response) {
+        $.get('/v1/note/noteid/**/id', function(response) {
             $('#response8').html(JSON.stringify(response, null, 2));
         });
-        $.get('/api/v1/js/talent/6271413/roles', function(response) {
+        $.get('/v1/note/noteid/**/id', function(response) {
             $('#response4').html(JSON.stringify(response, null, 2));
         });
     </script>

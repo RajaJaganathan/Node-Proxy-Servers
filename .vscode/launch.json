@@ -8,9 +8,9 @@
       "type": "node",
       "request": "launch",
       "name": "Launch Program",
-      "program": "${workspaceRoot}/node_modules/gulp/bin/gulp.js",
+      "program": "${workspaceRoot}/proxycookie.js",
       "cwd": "${workspaceRoot}",
-      "args": ["dev"]
+      "_args": ["server"]
     },
     {
       "type": "node",
