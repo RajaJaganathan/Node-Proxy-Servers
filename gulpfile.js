@@ -36,8 +36,7 @@ var localProxy = {
         var hasMockFile = getPath(req.url);
         if (hasMockFile) {
             var filePath = pathMap[hasMockFile];
-            var body = JSON.stringify(JSON.parse(fs.readFileSync(filePath,
-                'utf8')));
+            var body = fs.readFileSync(filePath, 'utf8');
             res.setHeader("Content-Type", "application/json");
             res.end(body);
         }
