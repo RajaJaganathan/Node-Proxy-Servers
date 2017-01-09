@@ -39,6 +39,8 @@ var localProxy = {
             var body = fs.readFileSync(filePath, 'utf8');
             res.setHeader("Content-Type", "application/json");
             res.end(body);
+        } else {
+            console.log('File not found ', req.url);
         }
         next();
     }

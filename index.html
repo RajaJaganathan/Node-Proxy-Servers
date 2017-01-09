@@ -35,9 +35,11 @@
   }, function(response) {
     $('#response8').html(JSON.stringify(response, null, 2));
   });
+
   $.get('api/v1/note/noteid/4321/id', function(response) {
     $('#response8').html(JSON.stringify(response, null, 2));
   });
+  
   $.get('api/v1/note/noteid/1234/id', function(response) {
     $('#response4').html(JSON.stringify(response, null, 2));
   });
