@@ -39,30 +39,54 @@ gulp.task('server', function() {
 At the same time we don't really need to hit really server on development environment. In this scenario we can use below gulp task which serve the mock data json instead of calling original service.
 
 ```
-var localProxyMiddleware = proxy('/api', {
-    target: 'http://localhost:3000',
-    changeOrigin: true,
-    logLevel: 'debug',
-    pathRewrite: { //NOTE: ORDER IS IMPORTANT HERE
-        '/api/posts/[0-9]/edit': '/mockdata/posts_edit_1.json',
-        '/api/comments/[0-9]/edit': '/mockdata/comments_edit_1.json',
-        '/api/posts/[0-9]': '/mockdata/posts_1.json',
-        '/api/comments/[0-9]': '/mockdata/comments_1.json',
-        '/api/posts': '/mockdata/posts.json',
-        '/api/comments': '/mockdata/comments.json'
-    }
-    // pathRewrite: { //NOTE: ORDER IS NOT IMPORTANT HERE       
-    //     '^/api/posts/?(.*)': '/mockdata/posts.json',
-    //     '^/api/comments/?(.*)': '/mockdata/comments.json'
-    // }
-});
+//Local Manual API
+var pathMap = {
+    '/posts/2/edit': './mockdata/posts_edit_2.json', //Exact match with first match
+    '/posts/[0-9]/edit': './mockdata/posts_edit_1.json',
+    '/comments/[0-9]/edit': './mockdata/comments_edit_1.json',
+    '/posts/[0-9]': './mockdata/posts_1.json',
+    '/comments/2': './mockdata/comments_2.json', //Exact match with first match
+    '/comments/[0-9]': './mockdata/comments_1.json',
+    '/posts': './mockdata/posts.json',
+    '/comments': './mockdata/comments.json',
+    '/v1/note/noteid/comments': './mockdata/comments.json',
+    '/v1/note/noteid/**/id': './mockdata/comments.json'
+};
 
-gulp.task('default', function() {
+
+function getPath(url) {
+    for (var path in pathMap) {
+        if (minimatch(url, path)) {
+            return path;
+        }
+    }
+    return null;
+}
+
+var localProxy = {
+    route: "/api",
+    handle: function(req, res, next) {
+        var hasMockFile = getPath(req.url);
+        if (hasMockFile) {
+            var filePath = pathMap[hasMockFile];
+            var body = fs.readFileSync(filePath, 'utf8');
+            res.setHeader("Content-Type", "application/json");
+            res.end(body);
+        } else {
+            console.log('File not found ', req.url);
+        }
+        next();
+    }
+}
+
+gulp.task('dev', function() {
     browserSync.init({
         server: {
             baseDir: ".",
+            notify: true,
             middleware: [
-                localProxyMiddleware
+                localProxy,
+                require('connect-history-api-fallback')() //SPA refresh 
             ]
         }
     });
